@@ -137,6 +137,133 @@ class ObjectDeletionFlag(enum.IntFlag):
     IMAGES = XOBJECT_IMAGES | INLINE_IMAGES | DRAWING_IMAGES
 
 
+class _ActiveContentSanitizer:
+    """
+    State and helpers for :meth:`PdfWriter.remove_active_content`.
+
+    A single instance is used for one pass over the document so that
+    indirect objects referenced from several places are only processed
+    once and cyclic references cannot cause infinite loops.
+    """
+
+    def __init__(self) -> None:
+        # Action dictionaries already cleaned: kept as they are.
+        self.sanitized_actions: set[tuple[int, int] | int] = set()
+        # Action dictionaries currently being cleaned higher up the call
+        # stack: a /Next reference back to them is a cycle and left alone.
+        self.actions_in_progress: set[tuple[int, int] | int] = set()
+        # Nodes already visited while walking field or outline trees.
+        self.visited_nodes: set[tuple[int, int] | int] = set()
+
+    @staticmethod
+    def _key(obj: PdfObject) -> tuple[int, int] | int:
+        if isinstance(obj, IndirectObject):
+            return (obj.idnum, obj.generation)
+        return id(obj)
+
+    def sanitize_action(self, action: PdfObject) -> bool:
+        """
+        Sanitize an action dictionary in place.
+
+        Args:
+            action: The action (possibly an indirect reference to it).
+
+        Returns:
+            True if the action may stay (an internal ``/GoTo`` action whose
+            ``/Next`` chain has been sanitized), False if it must be removed
+            by the caller.
+
+        """
+        obj = action.get_object()
+        if not isinstance(obj, DictionaryObject):
+            return False
+        key = self._key(action)
+        if key in self.sanitized_actions or key in self.actions_in_progress:
+            # Already cleaned, or a cyclic /Next reference pointing back to
+            # an action that is currently being cleaned.
+            return True
+        action_type = obj.get("/S")
+        if action_type is not None:
+            action_type = action_type.get_object()
+        if action_type != "/GoTo":
+            return False
+        self.actions_in_progress.add(key)
+        try:
+            next_action = obj.get("/Next")
+            if next_action is not None:
+                next_obj = next_action.get_object()
+                if isinstance(next_obj, ArrayObject):
+                    # Keep only the allowed entries of the array.
+                    kept = [
+                        item for item in next_obj if self.sanitize_action(item)
+                    ]
+                    if kept:
+                        del next_obj[:]
+                        next_obj.extend(kept)
+                    else:
+                        del obj["/Next"]
+                elif not self.sanitize_action(next_action):
+                    del obj["/Next"]
+        finally:
+            self.actions_in_progress.discard(key)
+        self.sanitized_actions.add(key)
+        return True
+
+    def sanitize_action_entry(self, holder: DictionaryObject, key: str) -> None:
+        """Sanitize the action stored under ``key`` in ``holder``, in place."""
+        action = holder.get(key)
+        if action is not None and not self.sanitize_action(action):
+            del holder[key]
+
+    def sanitize_additional_actions(self, holder: DictionaryObject) -> None:
+        """Sanitize the ``/AA`` (additional actions) dictionary of ``holder``."""
+        aa = holder.get("/AA")
+        if aa is None:
+            return
+        aa_obj = aa.get_object()
+        if not isinstance(aa_obj, DictionaryObject):
+            return
+        for trigger in list(aa_obj):
+            if not self.sanitize_action(aa_obj.raw_get(trigger)):
+                del aa_obj[trigger]
+        if not aa_obj:
+            del holder["/AA"]
+
+    def sanitize_field_tree(self, field: PdfObject) -> None:
+        """Sanitize a form field and its descendants (``/Kids``), in place."""
+        obj = field.get_object()
+        if not isinstance(obj, DictionaryObject):
+            return
+        key = self._key(field)
+        if key in self.visited_nodes:
+            return
+        self.visited_nodes.add(key)
+        # A field node can double as a widget annotation.
+        self.sanitize_action_entry(obj, "/A")
+        self.sanitize_additional_actions(obj)
+        kids = obj.get(FA.Kids)
+        if kids is not None:
+            kids_obj = kids.get_object()
+            if isinstance(kids_obj, ArrayObject):
+                for kid in kids_obj:
+                    self.sanitize_field_tree(kid)
+
+    def sanitize_outline_tree(self, node: PdfObject) -> None:
+        """Sanitize the ``/A`` actions of an outline tree, in place."""
+        obj = node.get_object()
+        if not isinstance(obj, DictionaryObject):
+            return
+        key = self._key(node)
+        if key in self.visited_nodes:
+            return
+        self.visited_nodes.add(key)
+        self.sanitize_action_entry(obj, "/A")
+        for link in ("/First", "/Next"):
+            child = obj.get(link)
+            if child is not None:
+                self.sanitize_outline_tree(child)
+
+
 class PdfWriter(PdfDocCommon):
     """
     Write a PDF file out, given pages produced by another class or through
@@ -2036,6 +2163,126 @@ class PdfWriter(PdfDocCommon):
                     del annotations[i]
                 else:
                     i += 1
+
+    def remove_active_content(self) -> None:
+        """
+        Remove active content from this document, in place.
+
+        This is meant for documents that are only going to be read: it strips
+        the entry points through which simply opening the file, turning a
+        page, or clicking an annotation could trigger code or unexpected
+        network/local activity, while keeping the document itself (pages,
+        page content, metadata, static form fields, text annotations, link
+        rectangles, and internal GoTo navigation) intact.
+
+        Concretely, the following reachable entry points are removed or
+        cleaned, walking the objects reachable from the document root:
+
+        * Catalog: ``/OpenAction`` (kept if it is a plain destination
+          (array, dictionary or name); action dictionaries are sanitized),
+          ``/AA``, the ``/JavaScript`` and ``/EmbeddedFiles`` name trees in
+          ``/Names``, and the ``/AF`` associated-files entry.
+        * AcroForm: the ``/XFA`` entry, plus additional actions (``/AA``)
+          on form fields and their descendants (``/Kids``).
+        * Pages: ``/AA``, ``/AF``, and annotations of subtype
+          ``/RichMedia``, ``/Movie``, ``/Sound`` or ``/Screen`` (removed
+          entirely); other annotations are kept but their ``/A`` action and
+          ``/AA`` additional actions are sanitized.
+        * Outlines: the ``/A`` action of outline items is sanitized
+          (``/Dest`` destinations are left untouched).
+        * Actions: only internal ``/GoTo`` actions are kept; ``/JavaScript``,
+          ``/Launch``, ``/URI``, ``/GoToR``, ``/SubmitForm`` and all other
+          action types are removed. The ``/Next`` entry of a kept action is
+          sanitized as well, whether it is a single action dictionary or an
+          array; in an array, only the disallowed entries are dropped.
+
+        Notes:
+
+        * Only references are removed; objects that become unreferenced are
+          not scrubbed from the file. This method does not claim to protect
+          against all PDF viewer vulnerabilities.
+        * The method is idempotent: calling it twice has the same effect as
+          calling it once.
+        * Objects cloned from a :class:`~pypdf.PdfReader` into this writer
+          are copies, so the source reader is not modified.
+
+        """
+        # One sanitizer instance carries the state of the whole operation:
+        # it memoizes action dictionaries that have already been cleaned
+        # (indirect objects may be referenced from several places) and
+        # guards against cyclic references.
+        state = _ActiveContentSanitizer()
+        root = self._root_object
+
+        # --- Catalog ---
+        open_action = root.get(CatalogAttributes.OPEN_ACTION)
+        if open_action is not None:
+            open_action_obj = open_action.get_object()
+            if isinstance(open_action_obj, DictionaryObject):
+                if "/S" in open_action_obj or open_action_obj.get("/Type") == "/Action":
+                    # An action dictionary: keep only an internal GoTo action.
+                    if not state.sanitize_action(open_action):
+                        del root[CatalogAttributes.OPEN_ACTION]
+                # else: a destination-like dictionary (for example a
+                # Destination stored by the open_destination setter): keep.
+            elif not isinstance(
+                open_action_obj,
+                (ArrayObject, NameObject, TextStringObject, ByteStringObject),
+            ):
+                # Neither a destination array nor a named destination.
+                del root[CatalogAttributes.OPEN_ACTION]
+        state.sanitize_additional_actions(root)
+        names = root.get(CatalogAttributes.NAMES)
+        if names is not None:
+            names_obj = names.get_object()
+            if isinstance(names_obj, DictionaryObject):
+                names_obj.pop("/JavaScript", None)
+                names_obj.pop("/EmbeddedFiles", None)
+                if not names_obj:
+                    del root[CatalogAttributes.NAMES]
+        root.pop(CatalogAttributes.AF, None)
+
+        # --- AcroForm: XFA and field additional actions ---
+        acro_form = root.get(CatalogAttributes.ACRO_FORM)
+        if acro_form is not None:
+            acro_form_obj = acro_form.get_object()
+            if isinstance(acro_form_obj, DictionaryObject):
+                acro_form_obj.pop(InteractiveFormDictEntries.XFA, None)
+                fields = acro_form_obj.get(InteractiveFormDictEntries.Fields)
+                if fields is not None:
+                    fields_obj = fields.get_object()
+                    if isinstance(fields_obj, ArrayObject):
+                        for field in fields_obj:
+                            state.sanitize_field_tree(field)
+
+        # --- Outlines ---
+        outlines = root.get(Core.OUTLINES)
+        if outlines is not None:
+            state.sanitize_outline_tree(outlines)
+
+        # --- Pages and annotations ---
+        for page in self.pages:
+            page_obj = cast(DictionaryObject, page.get_object())
+            state.sanitize_additional_actions(page_obj)
+            page_obj.pop(PG.AF, None)
+            annots = page_obj.get(PG.ANNOTS)
+            if annots is None:
+                continue
+            annots_obj = annots.get_object()
+            if not isinstance(annots_obj, ArrayObject):
+                continue
+            i = 0
+            while i < len(annots_obj):
+                annot = annots_obj[i].get_object()
+                if isinstance(annot, DictionaryObject) and annot.get("/Subtype") in (
+                    "/RichMedia", "/Movie", "/Sound", "/Screen"
+                ):
+                    del annots_obj[i]
+                    continue
+                if isinstance(annot, DictionaryObject):
+                    state.sanitize_action_entry(annot, "/A")
+                    state.sanitize_additional_actions(annot)
+                i += 1
 
     def remove_objects_from_page(
         self,
