@@ -1,0 +1,193 @@
+{
+  "created": "2026-11-12T14:42:02+08:00",
+  "reviewed": true,
+  "reviewer": "Codex primary agent, AI-assisted",
+  "uid": 1731,
+  "frozen_commit": "c4dc14ffdcd69585b2cd6464611884f8452b8b81",
+  "native_trajectory_sha256": "3c0e91c7751083b5f2f554b003e015eb96264cb36c992006dca4bb2476234e82",
+  "files": [
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\freeze.json",
+      "path": "freeze.json",
+      "sha256": "ba09dd4bab1c68cd9fbcf6193f8f72c0d3da4594a3e1a49cb57ed4e3885c9048"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\freeze-audit.json",
+      "path": "freeze-audit.json",
+      "sha256": "54cd69574b3805c17f25ed69a2df6bb91642a0143b94ad38a5a912a41846e3e8"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\environment-reviewed.json",
+      "path": "environment-reviewed.json",
+      "sha256": "16c54c1e31deed0766a46b513eefeee48168fc0abcacd25ef18c1f8b7312a461"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\evidence-map.json",
+      "path": "evidence-map.json",
+      "sha256": "e878440bc07c4edd1d9f0290bfda411ce784faf291e0f42258eb8fc9b8c7ec40"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\model-final-answer.txt",
+      "path": "model-final-answer.txt",
+      "sha256": "08baaaceed67522b9202cb71cf4f9283e512022bc50331e899730603ac0b10ba"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\environment-import.stdout.log",
+      "path": "environment-import.stdout.log",
+      "sha256": "d02c6e3ee2f9d42e4933b39e047631d698cae5ec3667e916fd638ef7d4370837"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\environment-import.stderr.log",
+      "path": "environment-import.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\environment-packages.stdout.log",
+      "path": "environment-packages.stdout.log",
+      "sha256": "dc8257aa6b5f83f2c87ec1ffee5dabc8ff9970812809be668d8c259929dee1c7"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\environment-packages.stderr.log",
+      "path": "environment-packages.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\acceptance-command.json",
+      "path": "verification/acceptance-r1/acceptance-command.json",
+      "sha256": "20b252a6e61473ec7ea6403797e0bccfcdf619e57327e11652be7b2fcd64e683"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\acceptance.log",
+      "path": "verification/acceptance-r1/acceptance.log",
+      "sha256": "88b9312c4f81ab9811f93502c8ffe036ad7c5ba1f76ecfe929c2e934d2ce6bf9"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\acceptance.xml",
+      "path": "verification/acceptance-r1/acceptance.xml",
+      "sha256": "641b687575ddee6a56843701800f42adb9d2b432672365dd966675b7aa4f790e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\regression-cancellation.json",
+      "path": "verification/acceptance-r1/regression-cancellation.json",
+      "sha256": "70aa1deea9b33b8f45f2e1724c9061291b2663f5e356adc3804279ad6f548614"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\regression-command.json",
+      "path": "verification/acceptance-r1/regression-command.json",
+      "sha256": "ee7eedbb2bc9fe78934717cfe7d069115fbd94678031d89c6639e26b813cb9a2"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\regression.log",
+      "path": "verification/acceptance-r1/regression.log",
+      "sha256": "6df6b278cdf8b4be9878a5de9b4bfcb497202243a44bc254cb2f35dbb5af798e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\test-results.json",
+      "path": "verification/acceptance-r1/test-results.json",
+      "sha256": "acf3b476a8e2c5917ec6013bd9c76380655d3bda58336bdf391e04cd867062cd"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\test_acceptance.py",
+      "path": "verification/acceptance-r1/test_acceptance.py",
+      "sha256": "f04e35eb509a61fe7539c1f87b88c98c8a1956d3e284b227aa0901895a2d86b2"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\acceptance-command.json",
+      "path": "verification/associated-file-r2/acceptance-command.json",
+      "sha256": "d29bbe7de801d8be22dcef198efbbb75a68804552cbec08624592271f083bb8d"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\acceptance.log",
+      "path": "verification/associated-file-r2/acceptance.log",
+      "sha256": "6301cb1a8bef36a58042bc92aa04a600839bb9e5c30164bcf6657897d6a6a06e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\acceptance.xml",
+      "path": "verification/associated-file-r2/acceptance.xml",
+      "sha256": "eb85dbb3edb94754d59c978b94d5c2827e136412f7af9f1c49a0b87dffc2c26a"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\test-results.json",
+      "path": "verification/associated-file-r2/test-results.json",
+      "sha256": "1dcadd2a8daa340ab4358cc65b626b633e582d90883a605e12d9db351dacb780"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\test_acceptance.py",
+      "path": "verification/associated-file-r2/test_acceptance.py",
+      "sha256": "e08639f73ad46bdf7680a7c4d322922c97c86de7ec90bf26e20f1364de720f0a"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\regression-command.json",
+      "path": "verification/offline-regression-r2/regression-command.json",
+      "sha256": "e672bfc5210ea4bf6fab428f7f3fb81bbed5ece8973e6447c43ea680ebf06569"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\regression.log",
+      "path": "verification/offline-regression-r2/regression.log",
+      "sha256": "4cd17f3ea182c1eaaa9facc1dc094727fbf2c3a9bbf448695b8b6219e28aa4ce"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\regression.xml",
+      "path": "verification/offline-regression-r2/regression.xml",
+      "sha256": "02fa224210ac6a805fd1757d83ec68a09f62efac5fa3a86103326ed1be5b828a"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\test-results.json",
+      "path": "verification/offline-regression-r2/test-results.json",
+      "sha256": "756044d39e4173ced8103eee00e0180c4007cb232a1ecfedd2aac689991b1b4d"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\command.json",
+      "path": "verification/product-demo-r1/command.json",
+      "sha256": "044e32c6b3a6101dd9828225fd7c0fb33673d6bf7e1bc679265c296c597dc0ca"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\demo_pdf.py",
+      "path": "verification/product-demo-r1/demo_pdf.py",
+      "sha256": "26e98682d1e2699a8fe816f577d22fdc6f9987a9e9fc6d835a2b46d7411d8906"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\output\\actual-demo-results.json",
+      "path": "verification/product-demo-r1/output/actual-demo-results.json",
+      "sha256": "ce9039b20ec2b902447b6e00d32e1042cfbc0496fd8b10d81e74bf672acae323"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\stderr.log",
+      "path": "verification/product-demo-r1/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\stdout.log",
+      "path": "verification/product-demo-r1/stdout.log",
+      "sha256": "c21f88445fe767d691560d1b0f9c6a7d5cd7b1d26106a7367a76de9546347bf8"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\recorded-runtime-r1\\actual-commands.json",
+      "path": "verification/recorded-runtime-r1/actual-commands.json",
+      "sha256": "28f8b584a911bf5083dbf86480106241f5452d17e75122c7b87aeb6ada6d3444"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\recorded-runtime-r1\\attachment-output.log",
+      "path": "verification/recorded-runtime-r1/attachment-output.log",
+      "sha256": "86efac4bd76a1329748a6b1a1e27e144e4dd9c86e8a2fc6fabc6a6e9605e1992"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\recorded-runtime-r1\\document-output.log",
+      "path": "verification/recorded-runtime-r1/document-output.log",
+      "sha256": "c21f88445fe767d691560d1b0f9c6a7d5cd7b1d26106a7367a76de9546347bf8"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\recorded-runtime-r1\\regression-output.log",
+      "path": "verification/recorded-runtime-r1/regression-output.log",
+      "sha256": "1313f20f4bea2c75a98c42c4013bfc30ddea6ba81f1986097ddcee3295075c23"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\reproduction-notes.md",
+      "path": "verification/reproduction-notes.md",
+      "sha256": "c958f32492116b75afb0e19ca96146985868f13aa16be9c4db70460820b04da8"
+    }
+  ],
+  "reproduction_readme": "本目录是冻结产物的独立验收原件。实际环境：Windows，Python 3.14.3，未容器化，不依赖运行期外部服务。完整依赖及真实模块路径见 environment-reviewed.json。\n\n先安装记录中的同版 Python，检出冻结产物提交并建立虚拟环境；根据依赖记录安装测试依赖，并在检出目录用 python -m pip install -e . 安装项目（Bandit 需要这一步注册插件入口）。PyYAML 本题只验纯 Python 路径，可直接把 lib 加入 PYTHONPATH，无需编译 C 扩展。PYTHONPATH 指向检出目录、src 和 lib。各 verification 子目录保留实际 argv、原始输出、JUnit、退出码和用例。命令 JSON 中的原机绝对路径需替换为本次检出位置及相应子目录；测试断言不改。\n\n模型原轨中的测试与本目录独立验收分开记录。原生 JSONL 和75秒连续运行录像各自只有一个，保存在对应飞书附件字段，此处不另放轨迹。工程/夹具问题按 evidence-map.json 限定归因；测试通过不等于一般性安全证明。",
+  "no_model_source_edits": true,
+  "native_trace_included": false
+}

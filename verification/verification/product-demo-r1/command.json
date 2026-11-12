@@ -1,0 +1,14 @@
+{
+  "time": "2026-11-12T14:34:07+08:00",
+  "argv": [
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe",
+    "-B",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\demo_pdf.py",
+    "--output",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\output"
+  ],
+  "cwd": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact",
+  "PYTHONPATH": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact",
+  "exit_code": 0,
+  "separate_verification_helper": true
+}

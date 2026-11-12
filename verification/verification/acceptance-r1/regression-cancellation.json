@@ -1,0 +1,18 @@
+{
+  "reason": "Independent regression blocked on a declared enable_socket sample download; cancelled as harness/environment scope, not a product failure",
+  "time": "2026-11-12T14:31:37.0075709+08:00",
+  "processes": [
+    {
+      "ProcessId": 16736,
+      "ParentProcessId": 33328,
+      "CommandLine": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe -m pytest -q -p no:cacheprovider D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_actions.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_forms.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_annotations.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_remove_active_content.py --basetemp D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\tmp-regression --junitxml D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\regression.xml --disable-warnings"
+    },
+    {
+      "ProcessId": 4964,
+      "ParentProcessId": 16736,
+      "CommandLine": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe -m pytest -q -p no:cacheprovider D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_actions.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_forms.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_annotations.py D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact\\tests\\test_remove_active_content.py --basetemp D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\tmp-regression --junitxml D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\acceptance-r1\\regression.xml --disable-warnings"
+    }
+  ],
+  "model_run_already_frozen": true,
+  "future_scope": "not enable_socket; --disable-socket"
+}

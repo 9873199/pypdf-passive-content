@@ -1,0 +1,28 @@
+完成。所有交付物已就绪，77 个相关测试全部通过。
+
+## 改动内容
+
+**`pypdf/_writer.py`**（+247 行，纯新增，不改任何既有代码路径）
+
+- **`PdfWriter.remove_active_content()`** — 原地清理，随后可正常 `write()`，再用 `PdfReader` 打开。覆盖范围（从文档根可达的对象）：
+  - **Catalog**：`/OpenAction`（目的地数组/目的地字典/命名目的地保留，动作字典按规则清理）、`/AA`、`/Names` 下的 `/JavaScript` 和 `/EmbeddedFiles` 名称树（Names 清空后整体移除，无关名称树如 `/Dests` 保留）、`/AF`
+  - **AcroForm**：`/XFA` 移除；字段及 `/Kids` 子字段树上的 `/AA`（和 `/A`）递归清理，静态字段（`/T`、`/V`、`/FT` 等）保留
+  - **页面**：`/AA`、`/AF`；`/RichMedia`、`/Movie`、`/Sound`、`/Screen` 注释整体移除；其余注释（文本、链接矩形、Widget）保留但清理 `/A` 和 `/AA`
+  - **大纲**：大纲项的 `/A` 清理，`/Dest` 不动
+  - **动作**：只保留文档内 `/GoTo`；`/Next` 无论是单个字典还是数组都会递归清理——数组只剔除坏项、保留好项；GoTo 后面串的坏动作尾巴被切掉而 GoTo 本身保留
+- **`_ActiveContentSanitizer`** 辅助类：用 `(idnum, generation)` 记忆已清理的间接对象（多处引用只处理一次），用 in-progress 集合防止 `/Next` 环（A→B→A）死循环，字段/大纲树遍历也有 visited 保护。只删引用、不擦除废弃对象字节，docstring 里明确不宣称解决所有阅读器漏洞。
+
+**`tests/test_remove_active_content.py`** — 7 个完全离线构造的回归用例：
+
+- 往返测试：构造含全部恶意入口的 2 页 PDF → 清理 → 写入 → 重开，逐项断言对象图无残留（含一个通用图遍历器，断言可达范围内无任何非 GoTo 动作、`/JS`、`/XFA`、`/AF`），同时确认内部 GoTo 导航、`/Next` 混合数组去坏留好、循环 GoTo 链不挂、共享间接动作两处都被摘除、文本注释/链接/静态字段/元数据/大纲目的地保留
+- 幂等性：清理一次和两次后写出的字节完全一致
+- 克隆隔离：`clone_document_from_reader` 后清理，源 reader 的 `/OpenAction`、`/Names/JavaScript`、页面 `/AA` 原样保留
+- `/OpenAction` 为目的地数组、GoTo 动作（带坏 `/Next`）、命名目的地三种保留场景；空 writer 不报错
+
+**`docs/user/remove-active-content.md`** + `docs/index.rst` 目录条目 — 调用说明（`PdfWriter(clone_from=...)` → `remove_active_content()` → `write` → 重新打开）及清理范围、幂等性、不修改源 reader、不擦除废弃字节等性质说明。
+
+## 验证情况
+
+- 新增 7 个测试 + `test_actions.py`/`test_forms.py`/`test_annotations.py` 共 77 个全部通过
+- `test_writer.py` 因环境缺 PIL 无法收集（既有环境问题，与本次改动无关）；`test_reader.py` 等套件在此离线环境因下载样本文件而挂起，同样是既有环境限制
+- 额外冒烟验证了文档中的 `clone_from` 流程：清理后页面、元数据、大纲均正常，`/OpenAction` 无残留

@@ -1,0 +1,66 @@
+Input PDF:
+{
+  "pages": 2,
+  "title": "Quarterly account summary",
+  "actions": [
+    "/JavaScript",
+    "/JavaScript",
+    "/GoTo",
+    "/URI",
+    "/GoTo",
+    "/GoTo",
+    "/JavaScript",
+    "/JavaScript"
+  ],
+  "active_actions": [
+    "/JavaScript",
+    "/JavaScript",
+    "/URI",
+    "/JavaScript",
+    "/JavaScript"
+  ],
+  "active_entry_keys": [
+    "/AF",
+    "/JavaScript",
+    "/EmbeddedFiles",
+    "/JS",
+    "/XFA",
+    "/JS",
+    "/JS",
+    "/JS"
+  ],
+  "annotations": [
+    "/Text",
+    "/Link",
+    "/Screen"
+  ]
+}
+
+Removing active content...
+
+Saved and reopened PDF:
+{
+  "pages": 2,
+  "title": "Quarterly account summary",
+  "actions": [
+    "/GoTo",
+    "/GoTo",
+    "/GoTo"
+  ],
+  "active_actions": [],
+  "active_entry_keys": [],
+  "annotations": [
+    "/Text",
+    "/Link"
+  ]
+}
+
+Checks after reopening:
+OK   no active actions
+OK   no active entrypoints
+OK   normal pages and title retained
+OK   ordinary annotations retained
+OK   internal navigation retained
+OK   static field retained
+OK   page contents retained
+OK   repeat cleanup is stable

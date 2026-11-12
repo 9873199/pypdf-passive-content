@@ -1,0 +1,29 @@
+{
+  "time": "2026-11-12T14:34:05+08:00",
+  "argv": [
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_actions.py",
+    "tests/test_forms.py",
+    "tests/test_annotations.py",
+    "tests/test_remove_active_content.py",
+    "-m",
+    "not enable_socket",
+    "--disable-socket",
+    "--basetemp",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\tmp-regression",
+    "--junitxml",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\offline-regression-r2\\regression.xml",
+    "--disable-warnings"
+  ],
+  "cwd": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact",
+  "PYTHONPATH": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\frozen-artifact",
+  "exit_code": 0,
+  "seconds": 5.16,
+  "scope": "Related existing and model-added tests, explicitly excluding enable_socket download cases. Network disabled. Prior interrupted regression is not graded."
+}

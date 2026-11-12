@@ -1,0 +1,16 @@
+.{"remaining_file": "notes.txt", "embedded_payload_bytes": 47, "sha256": "3565f0a79ea419dd92825be3c38d844519d2dc9f2dcd3a7bf589e01c41486430", "reachable_after_cleanup": true}
+F.
+================================== FAILURES ===================================
+_____ test_cleaning_removes_associated_file_entry_on_ordinary_annotation ______
+
+    def test_cleaning_removes_associated_file_entry_on_ordinary_annotation():
+     w=attached();w.remove_active_content();r=reopen(w);note=r.pages[0]['/Annots'][0].get_object()
+     if '/AF' in note:
+      file=attachment(r);data=file['/EF']['/F'].get_data();print(json.dumps({'remaining_file':str(file['/F']),'embedded_payload_bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'reachable_after_cleanup':True}))
+>    assert '/AF' not in note
+E    AssertionError: assert '/AF' not in {'/Type': '/Annot', '/Subtype': '/Text', '/Rect': [0, 0, 20, 20], '/Contents': 'Quarterly notes', '/AF': [IndirectObject(6, 0, 1344837819984)]}
+
+..\verification\associated-file-r2\test_acceptance.py:23: AssertionError
+=========================== short test summary info ===========================
+FAILED ..\verification\associated-file-r2\test_acceptance.py::test_cleaning_removes_associated_file_entry_on_ordinary_annotation
+1 failed, 2 passed in 1.07s

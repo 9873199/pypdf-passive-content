@@ -1,0 +1,38 @@
+{
+  "time": "2026-11-12T14:34:12+08:00",
+  "run_id": "uf-20261112-sec-pdf-passive",
+  "checks": {
+    "acceptance": {
+      "tests": 3,
+      "passed": 2,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "failure_cases": [
+        "test_cleaning_removes_associated_file_entry_on_ordinary_annotation"
+      ],
+      "exit_code": 1,
+      "xfailed": 0,
+      "xpassed": 0,
+      "pytest_terminal_summary": {
+        "failed": 1,
+        "passed": 2
+      },
+      "junit_raw_counts": {
+        "tests": 3,
+        "passed": 2,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "failure_cases": [
+          "test_cleaning_removes_associated_file_entry_on_ordinary_annotation"
+        ],
+        "exit_code": 1
+      },
+      "count_source": "pytest terminal summary; XML kept unchanged"
+    }
+  },
+  "artifact_hashes_unchanged": true,
+  "score": null,
+  "feedback": "PENDING_SEMANTIC_REVIEW"
+}

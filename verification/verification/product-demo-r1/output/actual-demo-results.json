@@ -1,0 +1,64 @@
+{
+  "before": {
+    "pages": 2,
+    "title": "Quarterly account summary",
+    "actions": [
+      "/JavaScript",
+      "/JavaScript",
+      "/GoTo",
+      "/URI",
+      "/GoTo",
+      "/GoTo",
+      "/JavaScript",
+      "/JavaScript"
+    ],
+    "active_actions": [
+      "/JavaScript",
+      "/JavaScript",
+      "/URI",
+      "/JavaScript",
+      "/JavaScript"
+    ],
+    "active_entry_keys": [
+      "/AF",
+      "/JavaScript",
+      "/EmbeddedFiles",
+      "/JS",
+      "/XFA",
+      "/JS",
+      "/JS",
+      "/JS"
+    ],
+    "annotations": [
+      "/Text",
+      "/Link",
+      "/Screen"
+    ]
+  },
+  "after": {
+    "pages": 2,
+    "title": "Quarterly account summary",
+    "actions": [
+      "/GoTo",
+      "/GoTo",
+      "/GoTo"
+    ],
+    "active_actions": [],
+    "active_entry_keys": [],
+    "annotations": [
+      "/Text",
+      "/Link"
+    ]
+  },
+  "checks": {
+    "no_active_actions": true,
+    "no_active_entrypoints": true,
+    "normal_pages_and_title_retained": true,
+    "ordinary_annotations_retained": true,
+    "internal_navigation_retained": true,
+    "static_field_retained": true,
+    "page_contents_retained": true,
+    "repeat_cleanup_is_stable": true
+  },
+  "separate_verification_helper": true
+}

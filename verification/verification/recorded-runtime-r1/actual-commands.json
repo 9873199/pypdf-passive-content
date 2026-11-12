@@ -1,0 +1,62 @@
+[
+  {
+    "id": "document",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe",
+      "-B",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\product-demo-r1\\demo_pdf.py",
+      "--output",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\recording\\r1\\demo"
+    ],
+    "exit_code": 0,
+    "finished_at_seconds": 3.71
+  },
+  {
+    "id": "regression",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--no-header",
+      "--tb=line",
+      "tests/test_actions.py",
+      "tests/test_forms.py",
+      "tests/test_annotations.py",
+      "tests/test_remove_active_content.py",
+      "-m",
+      "not enable_socket",
+      "--disable-socket",
+      "--basetemp",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\recording\\r1\\tmp-regression",
+      "--disable-warnings"
+    ],
+    "exit_code": 0,
+    "finished_at_seconds": 24.47
+  },
+  {
+    "id": "attachment",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\pdf-passive\\env\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-s",
+      "-p",
+      "no:cacheprovider",
+      "--no-header",
+      "--tb=line",
+      "--disable-socket",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\verification\\associated-file-r2\\test_acceptance.py",
+      "--basetemp",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-pdf-passive\\recording\\r1\\tmp-attachment",
+      "--disable-warnings"
+    ],
+    "exit_code": 1,
+    "finished_at_seconds": 48.06
+  }
+]

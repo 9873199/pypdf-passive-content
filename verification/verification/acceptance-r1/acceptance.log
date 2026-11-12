@@ -1,0 +1,38 @@
+.............................FF
+================================== FAILURES ===================================
+________ test_page_and_annotation_associated_file_entrypoints_removed _________
+
+    def test_page_and_annotation_associated_file_entrypoints_removed():
+     w=writer();file=w._add_object(obj(Type=key('/Filespec'),F=TextStringObject('unused.txt')))
+     w.pages[0][key('/AF')]=arr(file)
+     note=obj(Type=key('/Annot'),Subtype=key('/Text'),Rect=arr(NumberObject(0),NumberObject(0),NumberObject(5),NumberObject(5)),AF=arr(file))
+     w.pages[0][key('/Annots')]=arr(w._add_object(note));r=clean(w)
+>    assert len(r.pages[0]['/Annots'])==1;assert_passive(r)
+                                          ^^^^^^^^^^^^^^^^^
+
+..\verification\acceptance-r1\test_acceptance.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+reader = <pypdf._reader.PdfReader object at 0x0000022563EBED50>
+
+    def assert_passive(reader):
+     for v in walk(reader.trailer['/Root']):
+      if isinstance(v,dict):
+>      assert not any(x in v for x in ['/JS','/XFA','/EmbeddedFiles','/AF'])
+E      assert not True
+E       +  where True = any(<generator object assert_passive.<locals>.<genexpr> at 0x0000022563EB98C0>)
+
+..\verification\acceptance-r1\test_acceptance.py:37: AssertionError
+________ test_page_direct_action_entry_removed_when_not_internal_goto _________
+
+    def test_page_direct_action_entry_removed_when_not_internal_goto():
+     w=writer();w.pages[0][key('/A')]=w._add_object(bad('/URI'));r=clean(w)
+>    assert '/A' not in r.pages[0];assert_passive(r)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    AssertionError: assert '/A' not in {'/Type': '/Page', '/Resources': {}, '/MediaBox': [0.0, 0.0, 200, 200], '/Parent': IndirectObject(2, 0, 2359613452112), '/A': IndirectObject(5, 0, 2359613452112)}
+
+..\verification\acceptance-r1\test_acceptance.py:133: AssertionError
+=========================== short test summary info ===========================
+FAILED ..\verification\acceptance-r1\test_acceptance.py::test_page_and_annotation_associated_file_entrypoints_removed
+FAILED ..\verification\acceptance-r1\test_acceptance.py::test_page_direct_action_entry_removed_when_not_internal_goto
+2 failed, 29 passed in 1.17s

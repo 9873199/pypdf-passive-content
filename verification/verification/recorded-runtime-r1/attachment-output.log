@@ -1,0 +1,8 @@
+.{"remaining_file": "notes.txt", "embedded_payload_bytes": 47, "sha256": "3565f0a79ea419dd92825be3c38d844519d2dc9f2dcd3a7bf589e01c41486430", "reachable_after_cleanup": true}
+F.
+================================== FAILURES ===================================
+E   AssertionError: assert '/AF' not in {'/Type': '/Annot', '/Subtype': '/Text', '/Rect': [0, 0, 20, 20], '/Contents': 'Quarterly notes', '/AF': [IndirectObject(6, 0, 2260901256784)]}
+D:\hc\userFeedback\cache\execution-security-next10-20261112\evaluation\uf-20261112-sec-pdf-passive\verification\associated-file-r2\test_acceptance.py:23: AssertionError: assert '/AF' not in {'/Type': '/Annot', '/Subtype': '/Text', '/Rect': [0, 0, 20, 20], '/Contents': 'Quarterly notes', '/AF': [IndirectObject(6, 0, 2260901256784)]}
+=========================== short test summary info ===========================
+FAILED ..\verification\associated-file-r2\test_acceptance.py::test_cleaning_removes_associated_file_entry_on_ordinary_annotation
+1 failed, 2 passed in 0.86s

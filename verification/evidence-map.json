@@ -1,0 +1,160 @@
+{
+  "time": "2026-11-12T14:38:42+08:00",
+  "uid": 1731,
+  "frozen_commit": "c4dc14ffdcd69585b2cd6464611884f8452b8b81",
+  "native_trajectory_sha256": "3c0e91c7751083b5f2f554b003e015eb96264cb36c992006dca4bb2476234e82",
+  "private_reasoning_used": false,
+  "reviewer": "Codex primary agent, AI-assisted",
+  "score": 3,
+  "score_rationale": "核心清理、保存重开和内容保留可运行，但可达注释AF附件入口及题面明确的page A遗漏，仍需人工补齐；非按测试通过比例打分。",
+  "requirements": [
+    {
+      "requirement": "PdfWriter原地remove_active_content，随后write并用PdfReader重开",
+      "status": "PASS",
+      "source": "pypdf/_writer.py:2167",
+      "evidence": "verification/product-demo-r1/command.json; output/actual-demo-results.json"
+    },
+    {
+      "requirement": "catalog OpenAction/AA/JavaScript名称树，XFA及静态表单子字段动作处理",
+      "status": "PASS_FOR_TESTED_CASES",
+      "source": "pypdf/_writer.py:2216-2256",
+      "tests": [
+        "test_catalog_dangerous_open_actions_removed",
+        "test_open_destination_array_preserved",
+        "test_nested_field_aa_and_xfa_removed_static_field_preserved",
+        "test_field_tree_with_parent_backrefs_and_allowed_actions"
+      ]
+    },
+    {
+      "requirement": "页面和注释A/AA动作只留内部GoTo",
+      "status": "PARTIAL_FAIL_PAGE_A",
+      "source": "pypdf/_writer.py:2264-2284",
+      "tests": [
+        "test_page_and_annotation_actions_removed_but_static_link_remains",
+        "test_internal_goto_page_and_annotation_actions_retained",
+        "test_mixed_additional_actions_preserve_allowed_events",
+        "test_page_direct_action_entry_removed_when_not_internal_goto"
+      ],
+      "failure": "页面自身仅调用sanitize_additional_actions，未调用sanitize_action_entry(page_obj,\"/A\")，普通页面字典中直接存放的/A URI动作保留。此项只判显式题面入口未处理，不宣称该非标准页面键已被实际阅读器执行。"
+    },
+    {
+      "requirement": "Next字典/数组过滤，安全GoTo保留，共享及循环引用终止",
+      "status": "PASS_FOR_TESTED_CASES",
+      "source": "pypdf/_writer.py:164-210",
+      "tests": [
+        "test_allowed_internal_navigation_and_next_good_entries",
+        "test_bad_single_next_dropped_without_losing_goto",
+        "test_shared_and_cyclic_indirect_action_graph_terminates",
+        "test_indirect_next_array_filters_without_losing_good_gotos",
+        "test_single_allowed_next_preserved"
+      ]
+    },
+    {
+      "requirement": "清除可达嵌入文件名称树与AF关联入口",
+      "status": "FAIL_ANNOTATION_AF",
+      "source": "pypdf/_writer.py:2239-2243,2267,2282-2284",
+      "tests": [
+        "test_embedded_entrypoints_removed_other_names_preserved",
+        "test_page_and_annotation_associated_file_entrypoints_removed",
+        "test_cleaning_removes_associated_file_entry_on_ordinary_annotation"
+      ],
+      "actual": "catalog/page的AF已删除，普通Text注释上的AF仍保留。真实PDF2.0文件中notes.txt Filespec指向EmbeddedFile流；清理、write及重开后，47字节无害载荷仍从annotation.AF[0].EF.F可达。",
+      "payload_sha256": "3565f0a79ea419dd92825be3c38d844519d2dc9f2dcd3a7bf589e01c41486430",
+      "root_cause": "按固定对象类型列举清理入口，遍历普通注释时只清A/AA，未移除AF。关联文件复测与首组AF失败是同一问题，不重复扣分。"
+    },
+    {
+      "requirement": "移除主动媒体，尽量保留文本注释、链接矩形、页内容、元数据、静态字段",
+      "status": "PASS_FOR_TESTED_CASES",
+      "tests": [
+        "test_active_media_annotation_removed",
+        "test_indirect_annotations_array_removes_media_keeps_notes",
+        "test_contents_metadata_and_idempotence"
+      ],
+      "evidence": "verification/product-demo-r1/output/actual-demo-results.json"
+    },
+    {
+      "requirement": "幂等、reader克隆隔离，不做废弃字节擦除或所有阅读器安全保证",
+      "status": "PASS_FOR_TESTED_CASES",
+      "tests": [
+        "test_contents_metadata_and_idempotence",
+        "test_reader_clone_not_mutated",
+        "test_cloning_with_associated_file_does_not_mutate_input_reader"
+      ],
+      "evidence": "source documentation and independent checks; no claim of general reader vulnerability protection"
+    },
+    {
+      "requirement": "离线构造回归和调用说明",
+      "status": "PASS_WITH_COVERAGE_GAP",
+      "source": "tests/test_remove_active_content.py; docs/user/remove-active-content.md; docs/index.rst",
+      "note": "自带回归构造了root/page AF，遗漏普通注释AF及page A；这些入口没有被全图断言覆盖到。"
+    }
+  ],
+  "observable_process": [
+    {
+      "native_lines": [
+        96,
+        106
+      ],
+      "observation": "执行者添加按catalog、AcroForm、page/annotation等类型枚举的清理方法和有状态helper。"
+    },
+    {
+      "native_lines": [
+        167,
+        180,
+        192,
+        277,
+        278
+      ],
+      "observation": "补7个离线构造测试并运行相关套件，原轨最后一组77通过；自带夹具AF仅位于root/page，未覆盖注释AF。"
+    },
+    {
+      "native_lines": [
+        185,
+        195,
+        210,
+        188,
+        247,
+        281,
+        282,
+        289
+      ],
+      "observation": "原轨披露PIL缺失以及读者等套件样本下载挂起，未把这些环境问题算产品缺陷。"
+    },
+    {
+      "native_lines": [
+        217,
+        220,
+        233,
+        289
+      ],
+      "observation": "补充调用文档并做clone_from冒烟，最终答复称交付齐备并概述从根可达的入口清理；独立复测仍有两处入口遗漏。"
+    }
+  ],
+  "independent_checks": [
+    {
+      "path": "verification/acceptance-r1/test-results.json",
+      "acceptance": "29 passed, 2 failed",
+      "regression": "INTERRUPTED_ENVIRONMENT_ONLY; missing cached download case, exit4294967295, XML absent; not used for score"
+    },
+    {
+      "path": "verification/offline-regression-r2/test-results.json",
+      "regression": "74 passed, 3 deselected (declared network cases); --disable-socket"
+    },
+    {
+      "path": "verification/associated-file-r2/test-results.json",
+      "acceptance": "2 passed, 1 failed",
+      "purpose": "真实嵌入文件确认同一annotation.AF遗漏；不重复计为新缺陷。"
+    },
+    {
+      "path": "verification/product-demo-r1/command.json",
+      "result": "exit0; all eight reopening/content-retention checks true for this constructed non-AF-annotation fixture"
+    }
+  ],
+  "scope_limits": [
+    "test_writer.py缺PIL和更大套件样本下载未闭环，不声称全套回归通过，不计能力扣分。",
+    "只确认声明入口的有限构造用例，不宣称涵盖所有PDF阅读器漏洞。",
+    "模型原轨77通过与冻结后禁网74通过/3排除为不同执行范围，互不代证。"
+  ],
+  "original_product_edited": false,
+  "engineering_failures_scored": false
+}

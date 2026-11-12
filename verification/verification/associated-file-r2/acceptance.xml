@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="1.008" timestamp="2026-11-12T14:34:11.256034+08:00" hostname="DESKTOP-BPAMAV8"><testcase classname="verification.associated-file-r2.test_acceptance" name="test_fixture_contains_real_embedded_file" time="0.039" /><testcase classname="verification.associated-file-r2.test_acceptance" name="test_cleaning_removes_associated_file_entry_on_ordinary_annotation" time="0.002"><failure message="AssertionError: assert '/AF' not in {'/Type': '/Annot', '/Subtype': '/Text', '/Rect': [0, 0, 20, 20], '/Contents': 'Quarterly notes', '/AF': [IndirectObject(6, 0, 1344837819984)]}">def test_cleaning_removes_associated_file_entry_on_ordinary_annotation():
+     w=attached();w.remove_active_content();r=reopen(w);note=r.pages[0]['/Annots'][0].get_object()
+     if '/AF' in note:
+      file=attachment(r);data=file['/EF']['/F'].get_data();print(json.dumps({'remaining_file':str(file['/F']),'embedded_payload_bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'reachable_after_cleanup':True}))
+&gt;    assert '/AF' not in note
+E    AssertionError: assert '/AF' not in {'/Type': '/Annot', '/Subtype': '/Text', '/Rect': [0, 0, 20, 20], '/Contents': 'Quarterly notes', '/AF': [IndirectObject(6, 0, 1344837819984)]}
+
+..\verification\associated-file-r2\test_acceptance.py:23: AssertionError</failure></testcase><testcase classname="verification.associated-file-r2.test_acceptance" name="test_cloning_with_associated_file_does_not_mutate_input_reader" time="0.004" /></testsuite></testsuites>
